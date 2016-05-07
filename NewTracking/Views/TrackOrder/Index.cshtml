@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@using (Html.BeginForm("Index", "TrackOrder", FormMethod.Get))
+{
+    <p>
+        Find by Consignor/Consignee/Vehicle : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        Order Status :
+        @*@Html.DropDownListFor(m => m.OrderStatus, new SelectList(CommonFunctions.GetOrderStatus(), "Text", "Value"), new { })*@
+       
+        Start Date :
+        <a data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012" class="input-append date dpYears">
+            @if (Model.OrderDate.ToString() == DateTime.MinValue.ToString())
+            {
+                @Html.TextBoxFor(model => model.OrderDate, new { @Value = "" })
+            }
+            else
+            {
+                @Html.TextBoxFor(model => model.OrderDate, new { @Value = Model.OrderDate.ToString("MM/dd/yyyy") })     }
+            <button type="button" id="BOrderDate" class="btn btn-danger date-reset"><i class="icon-remove"></i></button>
+
+
+        </a>
+        End Date :
+        <a data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012" class="input-append date dpYears">
+            @if (Model.OrderEDate.ToString() == DateTime.MinValue.ToString())
+            {
+                @Html.TextBoxFor(model => model.OrderEDate, new { @Value = "" })
+            }
+            else
+            {
+                @Html.TextBoxFor(model => model.OrderEDate, new { @Value = Model.OrderEDate.ToString("MM/dd/yyyy") })     }
+            <button type="button" id="BOrderEDate" class="btn btn-danger date-reset"><i class="icon-remove"></i></button>
+
+
+        </a>
+
+        <input type="submit" value="Search" />
+        <button><a href="/TrackOrder/DownloadFeed">Download</a></button>
+
+
+        <span class="pull-right">
+            Select Page Size :
+            @Html.DropDownListFor(m => m.PageSize, new SelectList(CommonFunctions.GetPageSize(), "Text", "Value"), new { })
+        </span>
+
+
+
+
+
+    </p>
+}

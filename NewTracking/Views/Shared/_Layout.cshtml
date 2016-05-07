@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @*@Scripts.Render("~/bundles/modernizr")
+        @Styles.Render("~/assets/css")
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />*@
+
+
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/bootstrap-reset.css" rel="stylesheet" />
+    <!--external css-->
+    <link href="~/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--<link href="assets/css/navbar-fixed-top.css" rel="stylesheet">-->
+    <!-- Custom styles for this template -->
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/css/style-responsive.css" rel="stylesheet" />
+    <link href="~/assets/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+    <link href="~/assets/css/table-responsive.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+
+</head>
+<body class="full-width" style="ms-touch-action: none;">
+
+    <section id="container" class="">
+        <!--header start-->
+        <header class="header white-bg">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!--logo start-->
+                <a href="#" class="logo">
+                  
+                    <img src="~/img/logo.png" alt="LOGISURE" width="50%" height="50%" />
+                </a>
+                <!--logo end-->
+                <div class="horizontal-menu navbar-collapse collapse ">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/Orders/Index">Orders</a></li>
+                        
+                        @if (ViewBag.Role == "admin")
+                        {
+                            <li><a href="/Orders/AllVehicle" target="_blank">Track Vehicles</a></li>
+                        }
+                        <li>
+                            @Html.DropDownList("SelectCity", (IEnumerable<SelectListItem>)ViewBag.CityList,"----SelectCity----", new { id = "SelectCity", @class = "form-control", style = "margin-top:15px" })
+
+   </li>
+@if (ViewBag.Permlist.Contains("21".ToString()))
+{
+                        <li><a href="/HistoricalTrackOrders/Index" target="_blank">Historical Orders</a></li>
+                     }
+                    </ul>
+
+                </div>
+                <div>
+                    @if (ViewBag.Role == "admin" && @Request.Url.AbsoluteUri.Contains("/Orders/AllVehicle"))
+                    {
+                        { Html.RenderAction("VehicleList", "Orders"); }
+                        @* @Html.Partial("VehicleList")*@
+                    }
+                </div>
+
+
+
+                <div class="top-nav">
+                    <ul class="nav pull-right top-menu">
+
+                        <!-- user login dropdown start-->
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <img alt="" src="~/img/avatar-mini4.jpg" class="img-circle">
+                                <span class="username">@Request.Cookies["UserName"].Value</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu extended logout">
+                                <div class="log-arrow-up"></div>
+                                @*<li><a href="#"><i class=" icon-suitcase"></i>Profile</a></li>
+                                    <li><a href="#"><i class="icon-cog"></i>Settings</a></li>
+                                    <li><a href="#"><i class="icon-bell-alt"></i>Notification</a></li>*@
+                                <li>
+                                    <a href="/Account/LogOff"><i class="icon-key"></i>Log Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- user login dropdown end -->
+                    </ul>
+                </div>
+
+            </div>
+
+        </header>
+        <!--header end-->
+        <!-- Main Body Starts -->
+
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <div class="panel-body profile-activity">
+                                @RenderSection("featured", required: false)
+                                @RenderBody()
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+    <footer class="site-footer">
+        <div class="text-center">
+            &copy; @DateTime.Now.Year - Logisure Solutions
+
+            <a href="#" class="go-top">
+                <i class="icon-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+
+
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="~/assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script type="text/javascript" src="~/assets/js/hover-dropdown.js"></script>
+    <script src="~/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="~/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="~/assets/js/respond.min.js"></script>
+    <script src="~/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/assets/bootstrap-datetimepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
+    <!--common script for all pages-->
+    <script src="~/assets/js/common-scripts.js"></script>
+    <script src="~/assets/js/advanced-form-components.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+
+            $('#PageSize').change(function () {
+                var paga = $(this).prop("value");
+
+                var Pagesize = getCookie("PageSize");
+                if (Pagesize != "") {
+                    document.cookie = "PageSize=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                    setCookie("PageSize", paga, 365);
+                    location.reload();
+                } else {
+                    setCookie("PageSize", paga, 365);
+                    location.reload();
+                }
+            });
+
+
+            $('#SelectCity').change(function () {
+                debugger;
+                var selectedCity = $(this).prop("value");
+                if (selectedCity == "")
+                {
+                    return false;
+                }
+                else
+                    {
+                var city = getCookie("City");
+                if (city != "" ) {
+                    document.cookie = "City=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                    setCookie("City", selectedCity, 365);
+                    location.reload();
+                } else {
+                    setCookie("City", selectedCity, 365);
+                    location.reload();
+                }
+                }
+            });
+        });
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+    </script>
+
+
+
+</body>
+</html>

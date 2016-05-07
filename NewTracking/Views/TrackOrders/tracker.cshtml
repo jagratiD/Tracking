@@ -1,0 +1,255 @@
+﻿@model NewTracking.Models.Class1
+@{
+    ViewBag.Title = "tracker";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<div class="row">
+  
+        <div class="col-lg-4">
+
+
+
+
+            <div class="col-lg-6">
+                <a href="#">
+                    @if (Model.photourl == null)
+                    {
+                        <img src="http://tflappv10.logisureindia.com/upload/no_image.png" class="round" style="height:100px; width:100px "alt="">
+                    }
+                    else
+                                        { 
+                    <img src=@Model.photourl alt="">
+                    }
+                    <br />
+                </a>
+            <center>    <span>
+                            <strong>
+                                @Model.DriverName 
+                               <br />
+                                @Model.DriverNumber
+                            </strong>
+</span></center>
+        </div>
+            <div class="col-lg-6">
+
+                <span><strong>Vehicle No</strong></span>
+
+                <p>   @Model.vehicleno</p>
+
+                <span><strong>Current Location</strong></span>
+                <p id="CurrentLocation"> </p>
+
+                <br />
+                <br />
+            </div>
+          
+            <div class="row">
+                <center>
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Pickdel
+                                </th>
+                                <th>
+                                    PlaceName
+                                </th>
+                                <th>
+                                    ETA
+                                </th>
+                            </tr>
+                        </thead>
+
+                            
+                        <tbody>
+@foreach (var item in ViewBag.ordertemp as IEnumerable<NewTracking.Models.Class1>)
+{ 
+                            <tr>
+                                <td>
+                                   @item.Pickdel
+                                </td>
+                                <td>
+                                    @item.PlaceName
+                                </td>
+                                <td>
+                                    @item.EstimatedArrivalTime
+                                </td>
+                            </tr>
+}
+                        </tbody>
+
+                    </table>
+                </center>
+
+            </div>
+
+            </div>
+        
+
+    
+
+
+    <div class="col-lg-8">
+        <div id="googleMap" style="width:800px;height:500px"></div>
+    </div>
+</div>
+
+
+
+    <script src="~/assets/js/jquery-1.8.3.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+        
+        var id = '@Model.vehicleno';
+        var CRN = '@Model.CRN';
+        var markers_array = [];
+
+        var mapCanvas = document.getElementById("googleMap");
+        var mapOptions = {
+            center: new google.maps.LatLng(26.9000, 75.8000),
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+        //Create and open InfoWindow.
+        var infoWindow = new google.maps.InfoWindow();
+
+        $(function () {
+
+            $.ajax({
+                url: '/TrackOrders/Getlocation',
+                data: { 'id': id, 'CRN': CRN },
+                type: "POST",
+                success: function (result) {
+                    //initialize(result.flat, result.flat4);
+                    LoadMap(result.flat);
+
+                },
+
+            });
+            current();
+
+        });
+
+        function LoadMap(latlnglist) {
+            
+            for (var i = 0; i < latlnglist.length; i++) {
+                var data = latlnglist[i];
+                var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    icon: "/assets/img/product-list/moving.png",
+                    title: data.DepotStaionName
+                })
+                markers_array.push(marker);
+                //Attach click event to the marker.
+                (function (marker, data) {
+                    google.maps.event.addListener(marker, "click", function (e) {
+                        //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+                        infoWindow.setContent("<div style = 'width:200px;min-height:20px'> <b>Name</b> : " + data.DepotStaionName +
+                            "<div style = 'width:200px;min-height:20px'> <b>Status</b> : " + data.Status +
+                            "  </div><div style = 'width:200px;min-height:20px'><b >PickORDel</b> : " + data.Pickordel +
+                              "  </div><div style = 'width:200px;min-height:20px'><b> Address</b> : " + data.Address +
+                               "  </div><div style = 'width:200px;min-height:20px'><b> Contact </b> : " + data.ContactNo +
+                            "  </div>");
+                        infoWindow.open(map, marker);
+                    });
+                })(marker, data);
+
+            }
+
+            autoCenterMap1();
+        }
+
+
+        function autoCenterMap1() {
+            
+            var bounds = new google.maps.LatLngBounds();
+            //for (var i = 0; i < markers_array.length; i++) {
+            //    var myPlace = new google.maps.LatLng(markers_array[i].H, markers_array[i].L);
+            //    bounds.extend(myPlace);
+            //}
+            for (var i = 0; i < markers_array.length; i++) {
+                if (markers_array[i].getVisible()) {
+                    bounds.extend(markers_array[i].getPosition());
+                }
+
+            }
+
+            map.fitBounds(bounds);
+        }
+        function isexist() {
+         
+            for (var i = 0; i < markers_array.length; i++) {
+                var datama = markers_array[i];
+
+                if (datama.title == "myposition") {
+                    return true;
+                    break;
+                }
+            }
+
+            return false;
+        }
+
+        setInterval(function () {
+            //    //code goes here that will be run every 5 seconds.
+            current();
+            //       // alert("Done");
+        }, 10000);
+
+        function current() {
+            $.ajax({
+                url: '/TrackOrders/Getlocation',
+                data: { 'id': id, 'CRN': CRN },
+                type: "POST",
+                success: function (result) {
+                    
+                    var order1 = result.order1;
+                    var lat = order1.CurrentLatitude
+                    var lng = order1.CurrentLongitude
+                    var myCenter = new google.maps.LatLng(lat, lng);
+
+                    var marker = new google.maps.Marker({
+                        position: myCenter,
+                        map: map,
+                        icon: "/assets/img/product-list/NewMarkers.png",
+                        title: "myposition"
+                    });
+
+
+                    //if current position does not exists in the array == true then add it else pass it
+                    if (!isexist())
+                        markers_array.push(marker);
+
+                    map.setCenter(myCenter);
+                    marker.setMap(map);
+
+
+
+                    $.ajax({
+                        url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + lat + "," + lng + "&sensor=false",
+                        type: "POST",
+                        success: function (res) {
+                          
+                            if (res.status != "ZERO_RESULTS") {
+                                fulladdress = res.results[0].formatted_address;
+                            } var heading = "<div class=\"form-group\"><label>Vehicle Information</label></div>";
+
+                            $("#CurrentLocation").empty();
+                            $("#CurrentLocation").append(fulladdress);
+
+                            //initialize(lat, lng);
+
+                        }
+
+                    });
+
+
+                },
+            });
+        }
+
+
+    </script>

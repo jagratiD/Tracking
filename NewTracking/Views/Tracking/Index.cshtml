@@ -1,0 +1,352 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+<link href="~/select2-master/select2-master/dist/css/select2.css" rel="stylesheet" />
+
+<div class="col-lg-12">
+
+    <section class="panel" style="min-height:530px;">
+
+        <br />
+        <div style="height:600px; width:100%;" id="map_canvas"></div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Get the Distance Travelled by the Vehicle</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="row">
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-9">
+                                    <div class="form-group">
+                                        <label id="lblVehicleNo"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Start Time : </label>
+                                        <input name="txtStartTime" type="text" id="txtStartTime" class="form_datetime form-control" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>End Time : </label>
+                                        <input name="txtEndTime" type="text" id="txtEndTime" class="form_datetime form-control" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <input type="button" class="btn btn-send" value="Get Distance" onclick="GetDistance()" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Distance in km : </label>
+                                        <h1><label id="lblDistanceinkm"></label></h1>
+                                        <img src="/assets/images/spinner.gif" alt="Loading" id="imgLoading" style="display:none" />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-2"></div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+    </section>
+</div>
+
+
+
+
+
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+
+<script src="~/select2-master/select2-master/dist/js/select2.full.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $("#Vehicle").select2();
+
+    var map;
+    var marker;
+    var markers = new Array();
+    var minute = 1;
+    var infoWindow = new google.maps.InfoWindow();
+    var interval = setInterval(GetVehiclePosition, 10000);
+    $(function () {
+        $('input[type="checkbox"]').bootstrapToggle('off')
+    })
+
+    $(function () {
+        debugger;
+
+        var mapOptions = {
+            center: new google.maps.LatLng(26.8914023, 75.826452),
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        GetVehiclePosition();
+
+    });
+
+
+    //$('#toggle').change(function () {
+    //    debugger;
+    //        var autozoom = $("#toggle").prop('checked');
+    //        if (autozoom == true) {
+    //          var x =  setInterval(autoCenterMap, 60000);
+    //        } else {
+    //            setInterval(x, 10000);
+    //        }
+
+    //    })
+
+    var iiiii = 0;
+    debugger;
+    function GetVehiclePosition() {
+
+        var autozoom = $("#toggle").prop('checked');
+
+
+        var CityID = $("#CityID option:selected").val();
+        var vehicle = $("#Vehicle option:selected").val();
+        debugger;
+        $.ajax({
+            url: '/Tracking/Getmap',
+            //type: 'GET',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: '{"vehicle":"' + vehicle + '","City":"' + CityID + '"}',
+            success: function (msg) {
+                try {
+                    debugger;
+                    setAllMap(null);
+                    markers = [];
+                    if (true) {
+                        var obj = msg.order;
+
+                        for (i = 0; i < obj.length; i++) {
+                            var data = obj[i];
+
+
+                            var icon = "/assets/images/moving.png";
+                            if (data.status == "IGN_OFF") {
+                                icon = "/assets/images/parked.png";
+                            }
+                            if (data.status == "IGN_ON" && data.Speed > 1) {
+                                icon = "/assets/images/moving.png";
+                            }
+                            if (data.status == "IGN_ON" && data.Speed < 1) {
+                                icon = "/assets/images/idle.png";
+                            }
+
+                            var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
+
+                            marker = new google.maps.Marker({
+                                position: myLatlng,
+                                map: map,
+                                icon: icon,
+                                title: data.VehicleNo
+                            });
+                            markers.push(marker);
+                            (function (marker, data) {
+                                google.maps.event.addListener(marker, "click", function (e) {
+                                    infoWindow.setContent("<b>VehicleNo : " + data.VehicleNo + "<br /> Delivery Boy : " + data.DeliveryBoy + "<br />Phone : " + data.BoyPhone + "<br>Last Updated Time : " + data.LastUpdated + "<br />Get KM : <a data-veh='" + data.VehicleNo + "' data-toggle='modal' href='#myModal' onclick='GetKilloMeter(\"" + data.VehicleNo + "\")'> Click here </a></b>");
+                                    infoWindow.open(map, marker);
+                                });
+                            })(marker, data);
+
+                        }
+                        debugger;
+                        //if (autozoom == true) {
+                        //    setInterval(autoCenterMap, 60000);
+                        //}
+                        //else {
+                        if (autozoom == true) {
+                            autoCenterMap();
+                        }
+
+                        //}
+                        //var markervalue = markers.length;
+                        //if (markervalue == 1) {
+                        //    autoCenterMap();
+                        //}
+
+                        if (iiiii == 0) {
+                            autoCenterMap();
+                            map.setZoom(4);
+                        }
+                        iiiii++;
+                    }
+
+                    else {
+
+                        var obj = JSON.parse(msg);
+
+                        for (i = 0; i < obj.length; i++) {
+                            var data = obj[i];
+
+                            var icon = "~/assets/img/red.png";
+                            if (data.Status == "IGN_OFF") {
+                                icon = "~/assets/img/red.png";
+                            }
+                            if (data.Status == "IGN_ON" && data.Speed > 1) {
+                                icon = "~/assets/img/red.png";
+                            }
+                            if (data.Status == "IGN_ON" && data.Speed < 1) {
+                                icon = "~/assets/img/red.png";
+                            }
+
+                            for (var j = 0; j < markers.length; j++) {
+                                if (markers[j].title == data.VehicleNo) {
+                                    var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
+                                    markers[j].setPosition(myLatlng);
+                                    markers[j].setIcon(icon);
+
+                                }
+                            }
+                        }  // For Loop Over Here
+
+                        if (iiiii == 0) {
+                            autoCenterMap();
+                            map.setZoom(14);
+                        }
+                        iiiii++;
+                    }     // Else Over Here
+                }
+                catch (error) {
+                    console.log(error.message);
+                }
+            },
+            error: function error(x, t) {
+                console.log(x.responseText);
+            }
+        });
+    }
+
+    function bindInfoWindow4(marker, map, infoWindow, html) {
+        debugger;
+        marker.myHtmlContent = html;
+        google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open(map, marker);
+            infoWindow.setContent(marker.myHtmlContent);
+        });
+    }
+
+
+
+    function autoCenterMap() {
+
+        debugger;
+        var bounds = new google.maps.LatLngBounds();
+        var mark = markers;
+        var mark1 = markers.lenth;
+        for (var i = 0; i < mark.length; i++) {
+            bounds.extend(markers[i].getPosition());
+        }
+        if (i > 1) {
+            map.fitBounds(bounds);
+            map.panToBounds(bounds);
+        }
+        else {
+            debugger;
+            map.fitBounds(bounds);
+        }
+
+
+
+    }
+
+    function GetKilloMeter(e) {
+        $("#lblVehicleNo").text('');
+        $("#txtStartTime").val('');
+        $("#txtEndTime").val('');
+        $("#lblDistanceinkm").text('');
+
+        $("#lblVehicleNo").text(e);
+    }
+
+    function GetDistance() {
+
+        var vehicle = $("#lblVehicleNo").text();
+        var start = $("#txtStartTime").val();
+        var End = $("#txtEndTime").val();
+
+        $("#imgLoading").show();
+
+        $.ajax({
+            url: '/Orders/GetDistance',
+            type: 'GET',
+            data: { 'Vehicle': vehicle, 'Start': start, 'End': End },
+            success: function (data) {
+                $("#imgLoading").hide();
+                $("#lblDistanceinkm").text(data.distance);
+            },
+            error: function error(x, t) {
+                alert(x.responseText);
+            }
+        });
+
+    }
+    function setAllMap(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
+
+    $(function () {
+        $('#CityID').change(function (ev) {
+            debugger;
+            var CityId = $('#CityID option:selected').val();
+
+            if (CityId != "") {
+                $.ajax({
+                    url: '/Tracking/GetVehicles',
+                    data: { 'CityId': CityId },
+                    cache: false,
+                    type: "GET",
+
+                    beforeSend: function (xhr) {
+                        $('#loadingimage').show();
+                    },
+                    success: function (data) {
+                        debugger;
+                        if (data.d == "success") {
+
+                            var list = data.order;
+                            $("#Vehicle").empty();
+                            $("#Vehicle").append("<option value>All Vehicle</option>");
+                            for (var i = 0; i < list.length; i++) {
+                                $("#Vehicle").append("<option value=" + list[i].Value + ">" + list[i].Text + "</option>");
+                            }
+
+                        }
+                        $('#loadingimage').hide();
+
+                    },
+                    error: function (response) {
+                        alert('Error');
+                        $('#loadingimage').hide();
+                    }
+                });
+            }
+
+        });
+    });
+
+</script>
+

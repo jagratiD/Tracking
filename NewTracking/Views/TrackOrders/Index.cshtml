@@ -1,0 +1,445 @@
+﻿@model NewTracking.Models.OrderPage
+@using PagedList.Mvc;
+
+@*<style>
+        table {
+          table-layout: fixed;
+        }
+
+        td {
+           overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>*@
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*@using (Html.BeginForm("Index", "TrackOrders", FormMethod.Get))
+    {
+        <marquee> Data available for today and yesterday. For any difficulty contact jagrati@logisure.in</marquee>
+
+
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="form-group " style="font-size:smaller">
+                    Consignor/Consignee<br />/Vehicle/HAWBNo: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group ">
+                    Order Status @Html.DropDownListFor(m => m.OrderStatus, new SelectList(NewTracking.Models.CommonFunctions.GetOrderStatus(), "Text", "Value"), new { })
+                </div>
+
+
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    Start Date
+                    <a data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012" class="input-append date dpYears">
+                        @if (Model.OrderDate.ToString() == DateTime.MinValue.ToString())
+                {
+                        @Html.TextBoxFor(model => model.OrderDate, new { @Value = "" })
+                }
+                else
+                {
+                        @Html.TextBoxFor(model => model.OrderDate, new { @Value = Model.OrderDate.ToString("MM/dd/yyyy") })     }
+                        <button type="button" id="BOrderDate" class="btn btn-danger date-reset"><i class="icon-remove"></i></button>
+
+
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+
+                    End Date
+                    <a data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012" class="input-append date dpYears">
+                        @if (Model.OrderEDate.ToString() == DateTime.MinValue.ToString())
+                {
+                        @Html.TextBoxFor(model => model.OrderEDate, new { @Value = "" })
+                }
+                else
+                {
+                        @Html.TextBoxFor(model => model.OrderEDate, new { @Value = Model.OrderEDate.ToString("MM/dd/yyyy") })     }
+                        <button type="button" id="BOrderEDate" class="btn btn-danger date-reset"><i class="icon-remove"></i></button>
+
+
+                    </a>
+                </div>
+            </div>
+
+
+            <input type="submit" value="Search" />
+            <button><a href="/TrackOrders/DownloadFeed" style="font-size:smaller; width:50px">Download</a></button>
+
+
+        </div>
+
+        <span class="pull-right">
+            Select Page Size :
+            @Html.DropDownListFor(m => m.PageSize, new SelectList(NewTracking.Models.CommonFunctions.GetPageSize(), "Text", "Value"), new { })
+            @Html.DropDownList("SelectNumber", (IEnumerable<SelectListItem>)ViewBag.CityList, new { id = "SelectCity", @class = "form-control", style = "margin-top:15px" })
+        </span>
+
+    }*@
+<div class="row">
+    @using (Html.BeginForm("Index", "TrackOrders", FormMethod.Get))
+    {
+        <marquee> Data available for today and yesterday. For any difficulty contact jagrati@logisure.in</marquee>
+        <div class="col-lg-3">
+            Consignor/Consignee/Vehicle/HAWB No :
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            @*<input type="text" name="txtConsinornee" id="txtConsinornee" class="form-control">*@
+        </div>
+
+        <div class="col-lg-2">
+            Order Status :
+            @Html.DropDownListFor(m => m.OrderStatus, new SelectList(NewTracking.Models.CommonFunctions.GetOrderStatus(), "Text", "Text"), new { @class = "form-control" })
+        </div>
+
+
+        <div class="col-lg-2">
+            Start Date
+            <a data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012" class="input-append date dpYears">
+                @if (Model.OrderDate.ToString() == DateTime.MinValue.ToString())
+                {
+                    @Html.TextBoxFor(model => model.OrderDate, new { @Value = "", @class = "form-control" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.OrderDate, new { @Value = Model.OrderDate.ToString("MM/dd/yyyy"), @class = "form-control" })     }
+
+
+            </a>
+        </div>
+        @*<div class="col-lg-1">
+
+            </div>*@
+        <div class="col-lg-2">
+            End Date
+            <a data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012" class="input-append date dpYears">
+                @if (Model.OrderEDate.ToString() == DateTime.MinValue.ToString())
+                {
+                    @Html.TextBoxFor(model => model.OrderEDate, new { @Value = "", @class = "form-control" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.OrderEDate, new { @Value = Model.OrderEDate.ToString("MM/dd/yyyy"), @class = "form-control" })     }
+
+
+            </a>
+        </div>
+
+        <div class="col-lg-2">
+            <br />
+            <input type="submit" value="Search" class="btn btn-danger" />
+            <button class="btn btn-info"><a href="/TrackOrders/DownloadFeed" style="color:white">Download</a></button>
+        </div>
+
+
+
+
+    }
+</div>
+
+<br />
+<div class="container-fluid">
+    <div class="row col-lg-12" style="margin-left:-25px">
+
+        <table id="TblBookings" class="table table-bordered table-striped table-condensed cf" style="width:100%">
+
+            <thead class="cf">
+
+                <tr>
+                    <th style=" width: 150px;">CRN No </th>
+                    <th>Client</th>
+                    <th> Consignor  </th>
+                    <th style="width:258px">Consignee</th>
+                    <th>Vehicle Booked For</th>
+                    <th>Vehicle Assign Time</th>
+                    <th>Consignor-Arrival Time</th>
+                    <th>Pickup Time</th>
+                    <th>Vehicle</th>
+                    <th style="width:67px;">Status</th>
+                    @if (ViewBag.Permlist.Contains("19".ToString()) || ViewBag.Permlist.Contains("23".ToString()))
+{
+                    <th>Action</th>
+                    }
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.list)
+                {
+                    <tr>
+                        <td id="" style="font-size:smaller;color:red " ondblclick="return OrderInfo('@item.OrderId')">
+                            <b style="color:black">@item.CRNNo</b> <br /><br />
+
+                            <b style="color:black">Points:</b>
+                            <br /> <u><b style="color:red">@item.TotalPickupPoints </b></u><b style="color:green">(@item.TotalPickupCompleted) P</b>
+                            <u>   <b style="color:red">@item.TotalDropPoints </b></u><b style="color:green">(@item.TotalDropCompleted) D</b>
+                            <u>    <b style="color:red">@item.TotalReturnPoints </b></u><b style="color:green">(@item.TotalReturnCompleted) R</b>
+                            <br /><br />
+                            <b style="color:black">Quantity:</b><b> @item.QuantityPickup P @item.QuantityDeliver D @(item.QuantityReturned == null ? 0 : item.QuantityReturned) R</b>
+                     
+                            <b style="color:black">Route:@if (item.Route != null)  { @item.Route} else{<span>NA</span>}</b>
+
+                            <br />
+                        </td>
+                        <td id="" ondblclick="return OrderInfo('@item.OrderId')">@item.ClientName</td>
+                        <td id="" ondblclick="return OrderInfo('@item.OrderId')">@item.Consignor</td>
+                        <td id="" ondblclick="return OrderInfo('@item.OrderId')" style="word-break:break-all; word-wrap:break-word;">@item.Consignee</td>
+                        <td ondblclick="return OrderInfo('@item.OrderId')">@item.EstimatedPickupTime</td>
+
+                        <td id="" ondblclick="return OrderInfo('@item.OrderId')">@item.VehicleAssignTime</td>
+                        @if (item.PickUpTime == null)
+                        {
+                            <td>NA</td>
+                        }
+                        else
+                        {
+                            <td id="" ondblclick="return OrderInfo('@item.OrderId')">@(item.PickUpTime.ReachedAt == null ? "" : Convert.ToString(item.PickUpTime.ReachedAt))</td>
+                        }
+                        @if (item.PickUpTime == null)
+                        {
+                            <td>NA</td>
+                        }
+                        else
+                        {
+                            <td id="" ondblclick="return OrderInfo('@item.OrderId')">@(item.PickUpTime.ActualCompletedAt == null ? "" : Convert.ToString(item.PickUpTime.ActualCompletedAt))</td>
+
+                        }
+                        <td id="" ondblclick="return OrderInfo('@item.OrderId')"><a onclick="return VehicleInfo('@item.Vehicle')">@item.Vehicle</a></td>
+                        <td id="ShowStatus" ondblclick="return OrderInfo('@item.OrderId') "> @item.Status  </td>
+                      
+                    @if (ViewBag.Permlist.Contains("19".ToString()) || ViewBag.Permlist.Contains("23".ToString()))
+{  <td>
+                            <a class="btn" href="#" title="View POD" onclick="GetPods('@item.OrderId')"><img width="20px" width="20px" src="~/Images/POD.png" /></a>
+                            <br />
+
+                            <a class="btn" href="/TrackOrders/tracker?Vehicle=@item.Vehicle&CRNNo=@item.CRNNo" title="View Tracking" target="_blank"><img width="20px" width="20px" src="~/Images/Tracking.png" /></a>
+                  
+ </td>
+                    }</tr>
+                }
+            </tbody>
+
+        </table>
+
+        <br />
+        Page @(Model.list.PageCount < Model.list.PageNumber ? 0 : Model.list.PageNumber) of @Model.list.PageCount
+
+
+        @Html.PagedListPager(Model.list, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+
+<div class="modal fade col-lg-12" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog col-lg-12" style="margin-left:+180px; ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="heading" style="text-align:center"></h4>
+            </div>
+
+            <div class="modal-body col-lg-12">
+                <div class="col-lg-12 form-horizontal">
+                    <div class="col-lg-5">
+                        <h4 class="modal-title">Vehicle Information</h4><br />
+                        <div id="content1">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <h4 class="modal-title"> Client Information<br /></h4><br />
+                        <div id="contentClient">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12" style="overflow-y:scroll; height:300px">
+                    <br /><br />
+
+                    <br />
+                    <table class="table table-responsive" id="orderdetails"></table>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade col-lg-12" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog col-lg-12" style="margin-left:+180px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="heading1" style="text-align:center"></h4>
+            </div>
+
+            <div class="modal-body col-lg-12">
+                <div class="col-lg-12 " id="data">
+
+
+                </div>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#OrderDate").datepicker();
+        $("#OrderEDate").datepicker();
+
+        $("#BOrderDate").click(function () {
+            $('#OrderDate').val("");
+        })
+        $("#BOrderEDate").click(function () {
+            $('#OrderEDate').val("");
+        })
+    });
+    var fulladdress = "Not Found";
+
+    function VehicleInfo(id) {
+        debugger;
+
+        $.ajax({
+            url: '/TrackOrders/GetVehicleInfo',
+            data: { 'id': id },
+            type: "POST",
+            success: function (result) {
+                debugger;
+                var order1 = result.order1;
+                var lat = order1.CurrentLatitude
+                var lng = order1.CurrentLongitude
+
+                $.ajax({
+                    url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + lat + "," + lng + "&sensor=false",
+                    type: "POST",
+                    success: function (res) {
+                        debugger;
+                        if (res.status != "ZERO_RESULTS") {
+                            fulladdress = res.results[0].formatted_address;
+                        }
+                        var heading = "<div class=\"form-group\"><label>Vehicle Information</label></div>";
+
+                        var contentClient = "<div class=\"row\"><div class=\"col-lg-12\">";
+                        contentClient += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Driver Name</b></label><label class=\"col-lg-8\">" + order1.DriverName + "</label></div>";
+                        contentClient += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Phone Number</b></label><label class=\"col-lg-8\">" + order1.PhoneNumber + "</label></div>";
+                        contentClient += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Vehicle Last Known Location</b></label><label class=\"col-lg-8\">" + fulladdress + "</label></div>";
+                        contentClient += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Vehicle Last Known Time</b></label><label class=\"col-lg-8\">" + order1.DateTime + "</label></div>";
+                        document.getElementById("heading1").innerHTML = heading;
+                        document.getElementById("data").innerHTML = contentClient;
+                        $('#myModal1').modal('toggle');
+                        $('#myModal1').modal('show');
+                    }
+                });
+
+
+
+            },
+            error: function (response) {
+                debugger;
+                alert("error : " + response);
+
+
+            }
+        });
+
+    }
+
+
+    function OrderInfo(id) {
+
+        debugger;
+        $.ajax({
+            url: '/TrackOrders/GetOrderInfo',
+            data: { 'id': id },
+            type: "POST",
+            success: function (result) {
+                debugger;
+                var order = result.order;
+                var order1 = result.order1;
+                var heading = "<div class=\"form-group\"><label><b> CRN Number: </b>" + order[0].CRNNumber + "</label>" + " &nbsp&nbsp" + "<label><b> OrderType: </b>" + order[0].OrderType + "</label></div>";
+
+                var content1 = "<div class=\"row\"><div class=\"col-lg-12\">";
+                content1 += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Vehicle: </b></label><label class=\"col-lg-8\">" + order[0].Vehicle + "</label></div>";
+                content1 += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Vehcile Type:</b></label><label class=\"col-lg-8\">" + order[0].vehicletype + "</label></div>";
+
+
+                var contentClient = "<div class=\"row\"><div class=\"col-lg-12\">";
+                contentClient += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Client Name</b></label><label class=\"col-lg-8\">" + order[0].ClientName + "</label></div>";
+                contentClient += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>DepotStation Name:</b></label><label class=\"col-lg-8\">" + order[0].Name + "</label></div>";
+                contentClient += "<div class=\"form-group\"><label class=\"col-lg-4\"><b>Email Id</b></label><label class=\"col-lg-8\">" + order[0].Email_Id + "</label></div>";
+
+                document.getElementById("heading").innerHTML = heading;
+                document.getElementById("content1").innerHTML = content1;
+                document.getElementById("contentClient").innerHTML = contentClient;
+
+                var str = "";
+                $("#orderdetails").empty();
+                $('#orderdetails').append('<tr><th>Event</th><th>DepotStation</th><th>Complete Date Time</th><th>Entered Quantity</th><th>PickDel Status</th><th>Quantity</th><th>Contact Number</th><th>FloorNumber</th><th>CDN Number</th></tr>')
+                for (i = 0; i < result.order1.length; i++) {
+
+                    str += '<tr>';
+                    str += '<td>' + order1[i].PickOrDelivery + '</td>';
+                    str += '<td>' + order1[i].Name + '</td>';
+                    str += '<td> ' + order1[i].ActualCompletedAt + '</td>';
+                    str += '<td> ' + order1[i].EnteredQty + '</td>';
+                    str += '<td> ' + order1[i].PickDelStatus + '</td>';
+                    str += '<td>' + order1[i].Quantity + '</td>';
+                    str += '<td>' + order1[i].ContactNumber + '</td>';
+                    str += '<td>' + order1[i].FloorNumber + '</td>';
+                    str += '<td>' + order1[i].CDNnumber + '</td>';
+
+                    str += '<tr/>';
+                }
+
+                $("#orderdetails").append(str);
+                $('#myModal').modal('toggle');
+                $('#myModal').modal('show');
+            },
+            error: function (response) {
+                debugger;
+                alert("error : " + response);
+
+
+            }
+        });
+
+    }
+
+    function GetPods(e) {
+        $.ajax({
+            type: 'POST',
+            data: { 'OrderId': e },
+            url: "/TrackOrders/Encrypt",
+            success: function (data) {
+                var d = data.Status;
+                //if (d == "New") {
+                window.open("/POD/index?OId=" + data.Oid);
+                //}
+                //else {
+                //    window.open("http://pods.logisure.in/proofofdelivery.aspx?OrderId=" + data.Oid);
+                //}
+
+            },
+            error: function error(x, t) {
+                console.log(x.responseText);
+            }
+        });
+    }
+
+
+    //       $("#mydropdownlist").val();
+
+</script>

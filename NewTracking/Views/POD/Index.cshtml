@@ -1,0 +1,248 @@
+﻿@{
+    Layout = "../Shared/POD_Layout.cshtml";
+    ViewBag.Title = "LOGISURE SOLUTIONS";
+}
+
+<script src="~/assets/js/jquery.base64.min.js"></script>
+
+@* Fancybox Plugin *@
+<script src="~/assets/fancybox/lib/jquery.mousewheel.pack.js"></script>
+
+<script src="~/assets/fancybox/source/jquery.fancybox.js"></script>
+<link href="~/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+
+<script src="~/assets/fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
+<link href="~/assets/fancybox/source/helpers/jquery.fancybox-buttons.css" rel="stylesheet" />
+
+<script src="~/assets/fancybox/source/helpers/jquery.fancybox-thumbs.js"></script>
+<link href="~/assets/fancybox/source/helpers/jquery.fancybox-thumbs.css" rel="stylesheet" />
+
+<script src="~/assets/fancybox/source/helpers/jquery.fancybox-media.js"></script>
+@* Fancybox plugin End *@
+
+
+<script>
+    $(document).ready(function () {
+        $('.fancybox').fancybox();
+
+        // Set custom style, close if clicked, change title type and overlay color
+        $(".fancybox-effects-c").fancybox({
+            wrapCSS: 'fancybox-custom',
+            closeClick: true,
+            openEffect: 'none',
+            closeBtn: false,
+            helpers: {
+                title: {
+                    type: 'inside'
+                },
+                overlay: {
+                    css: {
+                        'background': 'rgba(238,238,238,0.85)'
+                    }
+                }
+            }
+        });
+
+
+        /*
+         *  Button helper. Disable animations, hide close button, change title type and content
+         */
+
+        $('.fancybox-buttons').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none',
+
+            prevEffect: 'none',
+            nextEffect: 'none',
+
+            closeBtn: false,
+
+            helpers: {
+                title: {
+                    type: 'inside'
+                },
+                buttons: {}
+            },
+
+            afterLoad: function () {
+                this.title = 'Image ' + (this.index + 1) + ' of ' + this.group.length + (this.title ? ' - ' + this.title : '');
+            }
+        });
+
+        /*
+			 *  Media helper. Group items, disable animations, hide arrows, enable media and button helpers.
+			*/
+        $('.fancybox-media')
+            .attr('rel', 'media-gallery')
+            .fancybox({
+                openEffect: 'none',
+                closeEffect: 'none',
+                prevEffect: 'none',
+                nextEffect: 'none',
+                closeBtn: true,
+                arrows: false
+
+            });
+
+    });
+</script>
+
+<style type="text/css">
+    table {
+        width: 800px;
+        max-width: 800px;
+        margin-left: 10%;
+    }
+
+        table th {
+            background: #005D88;
+            color: white;
+        }
+
+        table td {
+            color: black;
+            font-weight: bold;
+        }
+</style>
+
+<div class="row">
+    <img src="~/assets/img/spinner.gif" style="margin-left:50%; display:none" id="imgSpinner" />
+    <h3 id="header" class="text-center"></h3>
+    <table id="tblDelHome" class="table table-bordered table-condensed"></table>
+    <script type="text/javascript">
+        $(function () {
+            var OrderId = "@ViewBag.OrderId";
+            debugger;
+            $('#imgSpinner').show();
+
+            $.ajax({
+                url: '/POD/GetOInfo',
+                type: 'POST',
+                data: { 'OrderId': OrderId },
+                success: function (msg) {
+                    debugger;
+
+                    $('.wrapper').css('margin-top', '10px');
+
+                    var disap = msg.data2.distanceAP;
+                    var disapval = disap.toFixed(2);
+                    var distancePD = msg.data2.distancePD;
+                    var distancePDVal = distancePD=distancePD.toFixed(2);
+                    var trip = msg.data2.TripTime;
+                    var triptime = trip.toFixed(2);
+                    var route = msg.data2.route
+                    $('#tblDelHome').empty();
+
+                    $('#tblDelHome').css('margin-left', '15px');
+                    $('.wrapper').css('width', '1365px');
+                    $('.wrapper').css('min-width', '1365px');
+                    $('.wrapper').css('margin-left', '-115px');
+                    $('#tblDelHome').css('max-width', '1285px');
+
+                    $('#header').append('E-Proof of Delivery on behalf of Vehicle : ' + msg.data2.VehicleNo);
+                    $('#tblDelHome').append('<tr>' +
+                                                '<td colspan="3"> <img src="../assets/images/logo.png" style="height:80px; width:300px" /></td>' +
+                                                '<td colspan="2" style="text-align:left"> CRN Number: ' + msg.data2.OrderId + '<br /> Client : ' + msg.data2.ClientName + '<br />Pickup Points: <span style="color:red">(' + msg.data2.NoOfPickupPoints +
+                                                ')&nbsp;</span><span style="color:green">(' + msg.data2.PICKUPcount + ')</span> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;Pickup Quantity:  ' + msg.data2.PICKUPquancount + ' <br /> Delivery Points:<span style="color:red"> (' + msg.data2.NoOfDropPoints + ') &nbsp;</span><span style="color:green">(' + msg.data2.DELIVERYcount + ')</span> &nbsp;&nbsp; &nbsp;Delivery Quantity:  ' + msg.data2.DELIVERYquancount + '<br /> Return Points: <span style="color:red">(' + msg.data2.NoOfReturnPoints + ')&nbsp;</span><span style="color:green">(' + msg.data2.RDDCcount + ')</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Return Quantity:  ' + msg.data2.RDDCquancount + ' <br/>Remarks:' + msg.data2.CancelORemark + '</td>' +
+                                                '<td colspan="2" style="text-align:left"> Order Assigned DateTime : ' + msg.data2.AssignedAt + '<br /> Dry Run  : ' + disapval + 'Km' + '<br /> Order Distance : ' + distancePDVal + 'Km' + '<br /> Trip Time : ' + triptime + 'Min.' + '<br /> Route : ' + route + '</td>' +
+
+
+                                                +
+                                            '</tr>');
+                    $('#tblDelHome').append('<tr>' +
+                                                '<th> consignor/consignee Details </th>' +
+                                                '<th> TIME </th>' +
+                                                '<th> GR Details </th>' +
+                                                '<th> SIGNATURE </th>' +
+                                                '<th> PHOTO-GOODS </th>' +
+                                                '<th> PHOTO-GOODS RECIEPT </th>' +
+                                            '</tr>');
+
+                    str = "";
+                    debugger;
+                    for (i = 0; i < msg.data1.length; i++) {
+                        var data = msg.data1[i];
+
+                        var biltycheck = "<br />";
+                        if(data.BiltyNumber!=null)
+                            biltycheck = "Bilty Number :"+ data.BiltyNumber;
+                        var hawbnocheck = "<br />"
+                        if (data.CDNNO != null  && data.CDNNO !="" )
+                            hawbnocheck = "HAWB No:" + data.CDNNO;
+                        var checkrddcremark="<br/>"
+                        if (data.RDDCRemark != null)
+                            checkrddcremark = " R-DDC Remark:" + data.RDDCRemark;
+
+                          
+                        str += "<tr>";
+                        str += '<td style="word-break: break-all; width:150px;"> ' + data.Status + ' <br /><br /> ' + msg.data2.OrderId + ' / '+data.OId+'<br /><br/> Name of Consignor/Consignee : ' + data.NameOfConsignornee + ' <br /><br /> Address : ' + data.Address + ' <br /><br />   </td>';
+
+                      
+                        str += '<td> ' + data.Time + ' </td>';
+
+                    //    var qtyamttext = "Quantity";
+                        
+
+                        if (data.Status == "ENROUTE EXPENSES") {
+                            str += '<td> Amount : ' + data.Quantity +
+                                ' <br /><br />  ' + biltycheck +
+                                ' <br/> <br/> ' + hawbnocheck +
+                                ' <br /><br /> ' + checkrddcremark +
+                                ' <br /> <br/>  </td>';
+                        }
+                        else
+                       {
+                           str += '<td> Quantity : ' + data.Quantity +
+                             ' <br /><br />  ' + biltycheck +
+                             ' <br/> <br/> ' + hawbnocheck +
+                             ' <br /><br /> ' + checkrddcremark +
+                             ' <br /> <br/>  </td>';
+
+                        }
+                       
+                        if (data.AStatus == "PICKUP" || data.AStatus == "DELIVERY" || data.AStatus == "RETURN" || data.AStatus == "R-DDC") {
+
+                            str += '<td> <a class="fancybox-effects-c" href="' + data.Signature + '" data-fancybox-group="gallery" title="' + data.NameOfConsignornee + ' - Signature"><img src="' + data.Signature + '" alt="" style="width:300px; height:400px;" /></a> </td>';
+                            str += '<td> <a class="fancybox-effects-c" href="' + data.PhotoGoods + '" data-fancybox-group="gallery" title="' + data.NameOfConsignornee + ' - Goods Photograph"><img src="' + data.PhotoGoods + '" alt="" style="width:300px; height:400px;" /></a>  </td>';
+                            str += '<td> <a class="fancybox-effects-c" href="' + data.PhotoGR + '" data-fancybox-group="gallery" title="' + data.NameOfConsignornee + ' - Bill / Goods Reciept"><img src="' + data.PhotoGR + '" alt="" style="width:300px; height:400px;" /></a> </td>';
+                            str += "</tr>";
+
+                        }
+                        else {
+                            str += '<td> <a class="fancybox-effects-c" href="' + data.Signature + '" data-fancybox-group="gallery" title="' + data.NameOfConsignornee + ' - Signature"><img src="' + data.Signature + '" alt="" style="width:300px; height:400px;" /></a> </td>';
+                            str += '<td> <a class="fancybox-effects-c" href="' + data.PhotoGoods + '" data-fancybox-group="gallery" title="' + data.NameOfConsignornee + ' - Goods Photograph"><img src="' + data.PhotoGoods + '" alt="" style="width:300px; height:400px;" /></a>  </td>';
+                            str += '<td> <a class="fancybox-effects-c" href="' + data.PhotoGR + '" data-fancybox-group="gallery" title="' + data.NameOfConsignornee + ' - Bill / Goods Reciept"><img src="' + data.PhotoGR + '" alt="" style="width:300px; height:400px;" /></a> </td>';
+                            str += "</tr>";
+
+                        }
+
+                    }
+                    debugger;
+
+                    $('#tblDelHome').append(str);
+
+
+                    $('#imgSpinner').hide();
+
+                    $("html").getNiceScroll().resize();
+                },
+                error: function Error(x, t) {
+                    alert("Some Error Occured");
+                    $('#imgSpinner').hide();
+                    console.log(x.responseText);
+                }
+            });
+        })
+
+        function OpenMap() {
+
+            debugger;
+            window.open("/POD/NMap?Orderid=" + '@ViewBag.OrderId', '_blank');
+
+        }
+
+    </script>
+
+</div>
+
+

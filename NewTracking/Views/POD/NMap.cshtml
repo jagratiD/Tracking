@@ -1,0 +1,275 @@
+﻿@{
+    ViewBag.Title = "NMap";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="http://maps.googleapis.com/maps/api/js">
+</script>
+
+<div class="row">
+    <div class="col-lg-3">
+        <table id="tblDelHome" class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="btn-danger">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                
+                @foreach (var od in ViewBag.order as List<NewTracking.Models.DB_OrderDetails>)
+                {
+                    
+                    <tr class="btn-group-lg btn-lg">
+                        <td class="btn-default">
+                            <a class="center-block" onclick="fnmap(@od.ActualMLatitude,@od.ActualMLongitude)">
+                                @od.PickOrDelivery- @od.DB_DepotStation.Name
+                            </a>
+                        </td>                        
+                        <td style="display:none;">@od.ActualMLongitude</td>
+                        <td style="display:none;">@od.ActualMLatitude</td>
+                    </tr>
+                }
+
+            </tbody>
+            <thead >
+                <tr class="btn-group-lg btn-lg">
+                    <th class="btn-default">
+                        <a class="center-block" onclick="polylines()">
+                            <input type="submit" class="form-control btn-danger" value="Start">
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        
+    </div>
+    <div id="googleMap" class="col-lg-8" style="width:1000px;height:500px;"></div>
+</div>
+<script>
+    var markers_array = [];
+    var OrderId = "@ViewBag.OrderId";
+    var map;
+    function initialize() {
+        var mapProp = {
+            center: new google.maps.LatLng(20.593684, 78.962880),
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    }
+    debugger;
+    $.ajax({
+        
+        url: '/POD/GetOInfo',
+        type: 'POST',
+        data: { 'OrderId': OrderId },
+
+        success: function (msg) {
+
+            debugger;
+
+            var mylatlng = new google.maps.LatLng(msg.data1[0].Latitude, msg.data1[0].Longitude);
+            map.setCenter(mylatlng);
+
+
+            for (i = 0; i < msg.data1.length; i++) {
+                var data = msg.data1[i];
+                debugger;
+
+                var latLng = new google.maps.LatLng(data.Latitude, data.Longitude);
+                var marker= markers_array;
+                marker[i] = new google.maps.Marker({
+                    position: new google.maps.LatLng(data.Latitude, data.Longitude),
+                    icon: "/NewMarkers.png",
+                    map: map
+                    
+                });
+            }
+            debugger;
+            markers_array.push(marker);
+                 },
+    });
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function fnmap(x, y) {
+        debugger;
+        if (marker != null) {
+            clearMarkers();
+            var marker = new google.maps.Marker({
+                position: myCenter,
+                icon: "/NewMarkers.png",
+                animation: google.maps.Animation.BOUNCE
+            });
+
+            setTimeout(function () {
+                marker.setAnimation(null);
+            }, 700);
+
+            marker.setMap(map);
+        }
+        var myCenter = new google.maps.LatLng(x, y);
+        debugger;
+
+
+        var marker = new google.maps.Marker({
+            position: myCenter,
+            icon: "/NewMarkers.png",
+            animation: google.maps.Animation.BOUNCE
+        });
+
+        setTimeout(function () {
+            marker.setAnimation(null);
+        }, 700);
+
+        marker.setMap(map);
+
+
+
+        // Zoom to 9 when clicking on marker
+        google.maps.event.addListener(marker, 'click', function () {
+            map.setZoom(20);
+            map.setCenter(marker.getPosition());
+        });
+
+        google.maps.event.addDomListener(window, 'load');
+
+    }
+
+    function polylines()
+    {
+        var x = new Array();
+        var OrderId = "@ViewBag.OrderId";
+
+        $.ajax({
+            url: '/POD/GetOInfo',
+            type: 'POST',
+            data: { 'OrderId': OrderId },
+
+            success: function (msg) {
+
+                for (i = 0; i < msg.data1.length; i++) {
+                    var data = msg.data1[i];
+                    debugger;
+
+                    var latLng = new google.maps.LatLng(data.Latitude, data.Longitude);
+                    x.push(latLng);
+                   // markers_array.push(latLng);
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(data.Latitude, data.Longitude),
+                        icon: "/NewMarkers.png",
+                        map: map
+                    });
+                }
+                //drawPath1();
+
+                //var lineSymbol = {
+                //    path: google.maps.SymbolPath.CIRCLE,
+                //    scale: 8,
+                //    strokeColor: '#393'
+                //};
+
+                //Draw polyline:
+
+                var flightPlanCoordinates = x;
+
+                var flightPath = new google.maps.Polyline({
+                    path: x,
+                    //icons: [{
+                    //    icon: lineSymbol,
+                    //    offset: '100%'
+                    //}],
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+                flightPath.setMap(map);
+
+                var path = flightPath.getPath();
+
+                function animateCircle(line) {
+                    var count = 0;
+                    window.setInterval(function () {
+                        count = (count + 1) % 200;
+
+                        var icons = line.get('icons');
+                        icons[0].offset = (count / 2) + '%';
+                        line.set('icons', icons);
+                    }, 20);
+                }
+
+
+            },
+        });
+
+        var directionResult = [];
+        var pointView = 0;
+        var inter;
+
+        /* 
+        *  This function is used to draw path between markers.
+        */
+
+        //function drawPath1() {
+        //    debugger;
+            
+        //    directionsService = new google.maps.DirectionsService();
+        //    directionsDisplay = new google.maps.DirectionsRenderer({
+        //        suppressMarkers: true,
+        //        suppressInfoWindows: true
+        //    });
+
+        //    directionsDisplay.setMap(map);
+        //    if (pointView + 1 < x.length) {
+        //        debugger;
+        //        var source = new google.maps.LatLng(x[pointView].H, x[pointView].L);
+        //        var distination = new google.maps.LatLng(x[pointView + 1].H, x[pointView + 1].L);
+
+        //        var travelModes = ["DRIVING", "WALKING", "BICYCLING", "TRANSIT"];
+        //        var selectedMode = travelModes[0];  // SET TRAVEL MODE TO DRIVING. YOU MAY CHANGE THIS,, OR MAY BIND THIS WITH SOME DROP DOWN OR SELECTION.
+
+        //        var request = {
+        //            origin: source,
+        //            destination: distination,
+        //            provideRouteAlternatives: false,
+        //            travelMode: google.maps.TravelMode[selectedMode],
+        //            unitSystem: google.maps.UnitSystem.METRIC,
+        //            avoidHighways: true
+        //        };
+
+        //        directionsService.route(request, function (response, status) {
+        //            if (status == google.maps.DirectionsStatus.OK) {
+        //                directionResult.push(response);
+        //                directionsDisplay.setDirections(response);
+
+        //                // ADJUST THE POSITON OF STARTING POSITION.
+        //                debugger;
+
+
+        //                markers_array[pointView].setPosition(new google.maps.LatLng(response.routes[0].legs[0].start_location.lat(), response.routes[0].legs[0].start_location.lng()));
+
+
+        //                // ADJUST THE POSITON OF LAT MARKER OF LAST MARKER. 
+        //                if (pointView + 2 == markers_array.length) {
+        //                    markers_array[pointView + 1].setPosition(new google.maps.LatLng(response.routes[0].legs[0].end_location.lat(), response.routes[0].legs[0].end_location.lng()));
+        //                }
+
+        //                pointView++;
+
+        //                inter = setTimeout(function () { drawPath1(); }, 1000);
+        //            }
+        //        });
+        //    }
+        //    else {
+        //        clearTimeout(inter);
+                
+        //    }
+        //}
+
+    }
+
+    
+
+
+</script>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="27f4e91fb5bc4babb6a83f59e3b9a1da" Name="Diagram1" ZoomLevel="38" >
+        <EntityTypeShape EntityType="LogisureModel.DB_Address" Width="1.5" PointX="5.25" PointY="80.125" />
+        <EntityTypeShape EntityType="LogisureModel.DB_AddressPic" Width="1.5" PointX="15.75" PointY="14.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_APIRequest" Width="1.5" PointX="16.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_AttachmentMaster" Width="1.5" PointX="5.75" PointY="16.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Bill_Discount" Width="1.5" PointX="16.75" PointY="7.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_BookingTypeMaster" Width="1.5" PointX="10.75" PointY="15.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_CallCenterMapping" Width="1.5" PointX="3" PointY="11.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_CcenterTest" Width="1.5" PointX="7.75" PointY="16.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_City" Width="1.5" PointX="3" PointY="87.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Client" Width="1.5" PointX="15.75" PointY="74.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientBookingTypeMapping" Width="1.5" PointX="13" PointY="15" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientBusinessActivityType" Width="1.5" PointX="13.5" PointY="62" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientProductType" Width="1.5" PointX="13.5" PointY="97" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientReferredType" Width="1.5" PointX="13.5" PointY="94.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientServiceType" Width="1.5" PointX="12.75" PointY="0.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientServiceTypeMapping" Width="1.5" PointX="15" PointY="0.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientTurnAroundTime" Width="1.5" PointX="16.75" PointY="11.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ClientVehicleMapping" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ContactInformation" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Dapp_Login" Width="1.5" PointX="2.75" PointY="17.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Depot" Width="1.5" PointX="24" PointY="78.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_DepotStation" Width="1.5" PointX="19" PointY="89.625" />
+        <EntityTypeShape EntityType="LogisureModel.DB_DocumentTypes" Width="1.5" PointX="18.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Driver" Width="1.5" PointX="8.25" PointY="86.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_EcomIntegrationData" Width="1.5" PointX="18.75" PointY="6.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_EcomResponseCode" Width="1.5" PointX="9.75" PointY="18.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_EODDetails" Width="1.5" PointX="19.75" PointY="11.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_EODLogin" Width="1.5" PointX="19.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ExpectedTripsPerMonth" Width="1.5" PointX="13.5" PointY="65.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_FareStructure" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="LogisureModel.DB_FareStructure_DestinationWise" Width="1.5" PointX="5.25" PointY="2" />
+        <EntityTypeShape EntityType="LogisureModel.DB_FareStructure_WeightWise" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_GeonLogin" Width="1.5" PointX="11.75" PointY="19.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_GPS" Width="1.5" PointX="8.25" PointY="81.125" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Helper" Width="1.5" PointX="7.5" PointY="93.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_HelperDailyAttedance" Width="1.5" PointX="13.75" PointY="19.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_InitiatedPerson" Width="1.5" PointX="11.25" PointY="61.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_InternalSwPermissions" Width="1.5" PointX="5.75" PointY="13" />
+        <EntityTypeShape EntityType="LogisureModel.DB_IPAddress" Width="1.5" PointX="0.75" PointY="14.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ItemRegistration" Width="1.5" PointX="18" PointY="77.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_JustSentSms" Width="1.5" PointX="19.75" PointY="15.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_LogEverything" Width="1.5" PointX="15.75" PointY="19.75" />
+        <EntityTypeShape EntityType="LogisureModel.db_LogisurePoint" Width="1.5" PointX="7.5" PointY="108.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_LSFleetOwner" Width="1.5" PointX="6" PointY="73" />
+        <EntityTypeShape EntityType="LogisureModel.DB_LSVehicle" Width="1.5" PointX="8.25" PointY="69" />
+        <EntityTypeShape EntityType="LogisureModel.DB_mainOrderLog" Width="1.5" PointX="26.25" PointY="80" />
+        <EntityTypeShape EntityType="LogisureModel.DB_MarketVehicles" Width="1.5" PointX="20.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_MaterialType" Width="1.5" PointX="13.5" PointY="99.625" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Order_Details" Width="1.5" PointX="21" PointY="72" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Order_Details_Audit" Width="1.5" PointX="4.75" PointY="20.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Order_info" Width="1.5" PointX="17.75" PointY="20.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_OrderDeclined" Width="1.5" PointX="26.25" PointY="64.625" />
+        <EntityTypeShape EntityType="LogisureModel.DB_OrderDetails" Width="1.5" PointX="29.25" PointY="78.125" />
+        <EntityTypeShape EntityType="LogisureModel.DB_OrderItems" Width="1.5" PointX="29.25" PointY="73.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_OrderLog" Width="1.5" PointX="26.25" PointY="72.125" />
+        <EntityTypeShape EntityType="LogisureModel.DB_OrderLog_Audit" Width="1.5" PointX="19.75" PointY="20.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Orders" Width="1.5" PointX="18.75" PointY="73" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Organisation" Width="1.5" PointX="13.5" PointY="73.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_OrganisationType" Width="1.5" PointX="11.25" PointY="95.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_OtherOrdersLog" Width="1.5" PointX="21.75" PointY="7.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ParkingAddress" Width="1.5" PointX="21.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PaymentBasis" Width="1.5" PointX="15.75" PointY="71.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PaymentCycle" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PenalityIncentiveReason" Width="1.5" PointX="8.25" PointY="60.625" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Penalty" Width="1.5" PointX="9.75" PointY="7.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Permission" Width="1.5" PointX="11.75" PointY="11" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PersonType" Width="1.5" PointX="21.75" PointY="12.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PhoneInfo" Width="1.5" PointX="11.25" PointY="80.625" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PhoneLog" Width="1.5" PointX="21.75" PointY="15.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PhoneTracking" Width="1.5" PointX="21.75" PointY="19.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_PhotoUpload" Width="1.5" PointX="24" PointY="64.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_RefrencePerson" Width="1.5" PointX="6.75" PointY="22.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ServiceMailMapping" Width="1.5" PointX="22.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ServiceVehicleStatus" Width="1.5" PointX="8.75" PointY="22.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_SPickupMDelivery" Width="1.5" PointX="23.75" PointY="6.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_ClientType" Width="1.5" PointX="3" PointY="93" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_CustomerProfile" Width="1.5" PointX="3" PointY="95.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_FareFactors" Width="1.5" PointX="5.25" PointY="139.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_HelperCharges" Width="1.5" PointX="10.75" PointY="23.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_Invoice" Width="1.5" PointX="7.5" PointY="64.25" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_OrderDetails" Width="1.5" PointX="7.5" PointY="120" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_OrderPointsinfo" Width="1.5" PointX="7.5" PointY="111.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_Orders" Width="1.5" PointX="5.25" PointY="88.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_UserProfile" Width="1.5" PointX="0.75" PointY="96.25" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Spot_VehicleFareCharges" Width="1.5" PointX="23.75" PointY="16.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_States" Width="1.5" PointX="0.75" PointY="75.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_TariffPlan" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_TripKM" Width="1.5" PointX="23.75" PointY="21.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_User_InternalPermissions" Width="1.5" PointX="8" PointY="13" />
+        <EntityTypeShape EntityType="LogisureModel.DB_UserIPMapping" Width="1.5" PointX="3" PointY="14.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_UserPermission" Width="1.5" PointX="14" PointY="11" />
+        <EntityTypeShape EntityType="LogisureModel.DB_UserProfile" Width="1.5" PointX="7.75" PointY="6.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_UserRoles" Width="1.5" PointX="24.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_UserToDepotMapping" Width="1.5" PointX="12.75" PointY="24.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_UserToUnitMapping" Width="1.5" PointX="14.75" PointY="24.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Vehicle_City_Mapping" Width="1.5" PointX="21.75" PointY="24.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Vehicle_Client_Exclusivity" Width="1.5" PointX="23.75" PointY="24.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Vehicle_Tracking" Width="1.5" PointX="13.5" PointY="82.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Vehicle_TrackingLog" Width="1.5" PointX="25.75" PointY="6.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VehicleAssetMappingLog" Width="1.5" PointX="13.5" PointY="90.125" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VehicleDailyAttendance" Width="1.5" PointX="10.5" PointY="72.25" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VehicleEnrouteExpenses" Width="1.5" PointX="9.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VehicleMonthlyBillingReport" Width="1.5" PointX="10.5" PointY="87.625" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VehiclePenalty" Width="1.5" PointX="10.5" PointY="66.5" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VehicleRankingForUnit" Width="1.5" PointX="25.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VehicleType" Width="1.5" PointX="21.75" PointY="68.375" />
+        <EntityTypeShape EntityType="LogisureModel.DB_WebSitePageHit" Width="1.5" PointX="25.75" PointY="10.75" />
+        <EntityTypeShape EntityType="LogisureModel.sysdiagram" Width="1.5" PointX="25.75" PointY="14.75" />
+        <EntityTypeShape EntityType="LogisureModel.UserProfile" Width="1.5" PointX="0.75" PointY="11.25" />
+        <EntityTypeShape EntityType="LogisureModel.webpages_Membership" Width="1.5" PointX="25.75" PointY="17.75" />
+        <EntityTypeShape EntityType="LogisureModel.webpages_OAuthMembership" Width="1.5" PointX="25.75" PointY="21.75" />
+        <EntityTypeShape EntityType="LogisureModel.webpages_Roles" Width="1.5" PointX="7.75" PointY="1.125" />
+        <EntityTypeShape EntityType="LogisureModel.webpages_UsersInRoles" Width="1.5" PointX="10" PointY="0.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Amt_Received" Width="1.5" PointX="25.75" PointY="24.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Bill_Charges" Width="1.5" PointX="14" PointY="4.625" />
+        <EntityTypeShape EntityType="LogisureModel.DB_BillingInfo" Width="1.5" PointX="11.75" PointY="4.125" />
+        <EntityTypeShape EntityType="LogisureModel.DB_BillPrintHistory" Width="1.5" PointX="0.75" PointY="26.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_CcallSummary" Width="1.5" PointX="27.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Email_visitweb" Width="1.5" PointX="27.75" PointY="6.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_LogisureBillingInfo" Width="1.5" PointX="6.75" PointY="27.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_SendSms" Width="1.5" PointX="8.75" PointY="27.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Speed" Width="1.5" PointX="27.75" PointY="9.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Vehicle_CaptiveFleet" Width="1.5" PointX="10.75" PointY="27.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Vehicle_ParkingAddress" Width="1.5" PointX="16.5" PointY="87.875" />
+        <EntityTypeShape EntityType="LogisureModel.DB_WebsiteMetaInfo" Width="1.5" PointX="27.75" PointY="12.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_EndCallInfo" Width="1.5" PointX="12.75" PointY="27.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_UnitToAssociateStationUnitMapping" Width="1.5" PointX="14.75" PointY="27.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_VCAR_Login" Width="1.5" PointX="27.75" PointY="15.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_GlobalSetting" Width="1.5" PointX="27.75" PointY="18.75" />
+        <AssociationConnector Association="LogisureModel.DB_Client_DB_Address_FK" />
+        <AssociationConnector Association="LogisureModel.FK__db_Logisu__addre__31783731" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Address_DB_City" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Address_DB_States" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Depot_DB_Address" />
+        <AssociationConnector Association="LogisureModel.FK_DB_DepotStation_DB_Address" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Helper_DB_address" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Helper_DB_PermAddress" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Organisation_DB_Address" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Vehicle_ParkingAddress_DB_Address" />
+        <AssociationConnector Association="LogisureModel.DB_ClientBookingTypeMapping_DB_BookingTypeMaster_FK" />
+        <AssociationConnector Association="LogisureModel.FK_DB_CallCenterMapping_UserProfile" />
+        <AssociationConnector Association="LogisureModel.DB_LSVehicle_DB_City_FK" />
+        <AssociationConnector Association="LogisureModel.FK_DB_City_DB_States" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Driver_DB_City" />
+        <AssociationConnector Association="LogisureModel.FK_DB_GPS_DB_City" />
+        <AssociationConnector Association="LogisureModel.FK_DB_PhoneInfo_DB_City" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_FareFactors_DB_City" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_Orders_DB_City" />
+        <AssociationConnector Association="LogisureModel.DB_Client_DB_InitiatedPerson_FK" />
+        <AssociationConnector Association="LogisureModel.DB_Client_FK" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Client_DB_ClientProductType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Client_DB_ClientReferredType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Client_DB_ExpectedTripsPerMonth" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Client_DB_MaterialType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Client_DB_Organisation" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Depot_DB_Client" />
+        <AssociationConnector Association="LogisureModel.FK_DB_ItemRegistration_DB_Client" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Order_Details_DB_Client" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Order_Details_DB_Client1" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Station_DB_Client" />
+        <AssociationConnector Association="LogisureModel.FK_DB_ClientServiceTypeMapping_DB_ClientServiceType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderItems_DB_Depot" />
+        <AssociationConnector Association="LogisureModel.FK__DB_DeoptS__Logis__06E2DEE7" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Order_Details_DB_DepotStation" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Order_Detailss_DB_DepotStation" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Driver_DB_States" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Vehicle_Tracking_DB_Driver" />
+        <AssociationConnector Association="LogisureModel.FK_VehicleAssetMappingLog_DB_GPS" />
+        <AssociationConnector Association="LogisureModel.FK_DB_FareStructure_DB_FareStructure" />
+        <AssociationConnector Association="LogisureModel.FK_DB_FareStructure_DestinationWise_DB_FareStructure" />
+        <AssociationConnector Association="LogisureModel.FK_DB_FareStructure_WeightWise_DB_FareStructure" />
+        <AssociationConnector Association="LogisureModel.FK_DB_GPS_DB_States" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Vehicle_Tracking_DB_GPS" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Vehicle_Tracking_DB_Helper" />
+        <AssociationConnector Association="LogisureModel.FK_VehicleAssetMappingLog_DB_Helper" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Organisation_DB_ClientInitiatedBy" />
+        <AssociationConnector Association="LogisureModel.FK_DB_User_InternalPermissions_DB_InternalSwPermissions" />
+        <AssociationConnector Association="LogisureModel.FK_DB_UserIPMapping_DB_IPAddress" />
+        <AssociationConnector Association="LogisureModel.DB_ItemRegistration_DB_PaymentBasis_FK" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderItems_DB_ItemRegistration" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Vehicle_ParkingAddress_db_LogisurePoint" />
+        <AssociationConnector Association="LogisureModel.DB_LSVehicle_DB_LSFleetOwner_FK" />
+        <AssociationConnector Association="LogisureModel.DB_LSVehicle_DB_States_FK" />
+        <AssociationConnector Association="LogisureModel.DB_Vehicle_ParkingAddress_DB_LSVehicle_FK" />
+        <AssociationConnector Association="LogisureModel.DB_VehicleDailyAttendance_DB_LSVehicle_FK" />
+        <AssociationConnector Association="LogisureModel.DB_VehicleMonthlyBillingReport_DB_LSVehicle_FK" />
+        <AssociationConnector Association="LogisureModel.FK_DB_LSVehicle_DB_VehicleType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Vehicle_Tracking_DB_LSVehicle" />
+        <AssociationConnector Association="LogisureModel.FK_DB_VehiclePenalty_DB_LSVehicle" />
+        <AssociationConnector Association="LogisureModel.FK_VehicleAssetMappingLog_DB_LSVehicle" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Order_Details_DB_Orders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderLog_DB_Order_Details" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderDeclined_DB_PhotoUpload" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderItems_DB_Orders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderLog_DB_Orders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderLog_DB_PhotoUpload" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderLog_DB_PhotoUpload1" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderLog_DB_PhotoUpload2" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Organisation_DB_Organisation" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Organisation_DB_OrganisationType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_VehiclePenalty_DB_PenalityIncentiveReason" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Penalty_DB_Penalty" />
+        <AssociationConnector Association="LogisureModel.FK_DB_UserPermission_DB_Permission" />
+        <AssociationConnector Association="LogisureModel.DB_Vehicle_Tracking_DB_PhoneInfo_FK" />
+        <AssociationConnector Association="LogisureModel.FK_DB_PhoneInfo_DB_States" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_ClientInformation_DB_Spot_ClientType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_Orders_DB_Spot_ClientType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_ClientInformation_DB_Spot_UserProfile" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_Orders_DB_Spot_CustomerProfile" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_Invoive_DB_Spot_Orders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_OrderDetails_DB_Spot_Orders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_OrderDetails_DB_Spot_Orders1" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Spot_OrderPointsinfo_DB_Spot_Orders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_UserIPMapping_UserProfile" />
+        <AssociationConnector Association="LogisureModel.fk_UserId" />
+        <AssociationConnector Association="LogisureModel.FK_DB_VehicleEnrouteExpenses_DB_OrderDetails" />
+        <AssociationConnector Association="LogisureModel.fk_RoleId" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Bill_Charges_DB_BillingInfo" />
+        <EntityTypeShape EntityType="LogisureModel.DB_mainOrders" Width="1.5" PointX="24" PointY="83.875" />
+        <AssociationConnector Association="LogisureModel.FK_DB_mainOrders_DB_Client" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Orders_DB_Client" />
+        <AssociationConnector Association="LogisureModel.FK_DB_mainOrders_DB_DepotStation" />
+        <AssociationConnector Association="LogisureModel.FK_DB_mainOrderLog_DB_mainOrders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_mainOrders_DB_VehicleType" />
+        <AssociationConnector Association="LogisureModel.FK_DB_OrderDetails_DB_mainOrders" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Orders_DB_VehicleType" />
+        <EntityTypeShape EntityType="LogisureModel.DB_ExtraCharge" Width="1.5" PointX="13.5" PointY="68.625" />
+        <AssociationConnector Association="LogisureModel.DB_Client_BillingCycleID_FK" />
+        <AssociationConnector Association="LogisureModel.FK_DB_ExtraCharge_DB_LSVehicle1" />
+        <AssociationConnector Association="LogisureModel.FK_DB_ExtraCharge_DB_PenalityIncentiveReason" />
+        <AssociationConnector Association="LogisureModel.DB_FareStructure_VehicleTypeId_FK" />
+        <EntityTypeShape EntityType="LogisureModel.DB_Deduction" Width="1.5" PointX="16.5" PointY="65.625" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Deduction_DB_LSVehicle" />
+        <AssociationConnector Association="LogisureModel.FK_DB_Deduction_DB_PenalityIncentiveReason" />
+        <EntityTypeShape EntityType="LogisureModel.DB_CustomModules" Width="1.5" PointX="0.75" PointY="22.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_CustomPermissions" Width="1.5" PointX="22.75" PointY="27.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_CustomRole" Width="1.5" PointX="28.75" PointY="21.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_CustomUserProfile" Width="1.5" PointX="28.75" PointY="25.75" />
+        <EntityTypeShape EntityType="LogisureModel.DB_LogiMember" Width="1.5" PointX="20.75" PointY="27.75" />
+        <AssociationConnector Association="LogisureModel.FK_DB_LogiMember_DB_LogiMember" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
